@@ -7,3 +7,12 @@
 # Python egg metadata, regenerated from source files by setuptools.
 /*.egg-info
 /*.egg
+.idea/
+.idea/misc.xml
+.idea/modules.xml
+.idea/pydexter.iml
+.idea/vcs.xml
+.idea/workspace.xml
+.venv/
+local_settings.py
+

@@ -1,14 +1,25 @@
-**pydexter** - a Python client for the `Dexter <http://www.dxtr.it/>`_ REST API (`documentation <http://dexterdemo.isti.cnr.it:8080/dexter-webapp/dev/#!/rest>`_)
+**pydexter** -
+a Python 2 and 3 client for the `Dexter <http://www.dxtr.it/>`_ REST API (`documentation <http://dexterdemo.isti.cnr.it:8080/dexter-webapp/dev/#!/rest>`_)
 
 Installation::
 
+
     python setup.py install
+
 
 Usage example:
 
->>> import pydexter
->>> dxtr = pydexter.DexterClient("http://dexterdemo.isti.cnr.it:8080/dexter-webapp/api/")
->>> dxtr.nice_annotate("Dexter is an American television drama.", min_conf=0.8)
-[u'Dexter is an ', (u'American television', u'Television_in_the_United_States'), u' drama.']
 
-TODO: tests; some API arguments are missing.
+	from pydexter import DexterClient
+	url = 'http://dexterdemo.isti.cnr.it:8080/dexter-webapp/api/'
+	text = 'Dexter is an American television drama.'
+	dxtr = DexterClient(url)
+	dxtr.nice_annotate(text, min_conf=0.8)
+
+
+['Dexter is an ', ('American television', 'Television_in_the_United_States'), ' drama.']
+
+Test::
+
+
+Todo: some API arguments are missing.

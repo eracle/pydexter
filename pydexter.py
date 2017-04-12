@@ -12,11 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-__author__ = 'Giacomo Berardi <barnets@gmail.com>'
-
-import requests, re, sys
+import requests
+import re
+import sys
 from requests.exceptions import InvalidURL, HTTPError
 from operator import itemgetter
+
+__author__ = 'Giacomo Berardi <barnets@gmail.com>'
 
 # All the Dexter API calls start with
 REST = "/rest/"
@@ -30,6 +32,7 @@ url_regex = re.compile(
     r'\[?[A-F0-9]*:[A-F0-9:]+\]?)' # ...or ipv6
     r'(?::\d+)?' # optional port
     r'(?:/?|[/?]\S+)$', re.IGNORECASE)
+
 
 def structure_annotations(annotations):
     """Processes the response of the API call annotate.
@@ -55,7 +58,7 @@ def structure_annotations(annotations):
 class DexterClient:
     """A connection to a Dexter REST API server"""
 
-    def __init__(self, url, default_params={"lp":0}):
+    def __init__(self, url, default_params={"lp": 0}):
         self.url = url.rstrip("/") + REST
         if url_regex.match(self.url) is None:
             raise InvalidURL("Malformed url: " + self.url)
@@ -126,7 +129,7 @@ class DexterClient:
 
     def __resolve_id(self, entity):
         """Returns the id of an entity (if it not already a entity/category id)"""
-        if isinstance(entity, (int, long)):
+        if isinstance(entity, (int,)):
             return entity
         else:
             return self.get_id(entity)
@@ -139,18 +142,18 @@ class DexterClient:
     def __request(self, path, params, is_post=False):
         """Core method which executes the request http connection"""
         params.update(self.default_params)
-        result = None
-        reqUrl = self.url + path
+
+        req_url = self.url + path
         if is_post:
-            result = self.req.post(reqUrl, data=params)
+            result = self.req.post(req_url, data=params)
         else:
-            result = self.req.get(reqUrl, params=params)
+            result = self.req.get(req_url, params=params)
         if result.status_code != requests.codes.ok:
-            raise HTTPError("HTTP error for " + reqUrl + " (status code " + str(result.status_code) + "):\n\n" + result.text)
+            raise HTTPError("HTTP error for " + req_url + " (status code " + str(result.status_code) + "):\n\n" + result.text)
         result = result.json()
         if "error" in result and len(result) == 1:
             # This is probably never reached
-            raise Exception("Dexter error for " + reqUrl + ": " + result["error"])
+            raise Exception("Dexter error for " + req_url + ": " + result["error"])
         return result
 
 
