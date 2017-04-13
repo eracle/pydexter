@@ -21,8 +21,6 @@ import unittest
 from local_settings import URL
 
 
-endpoint = '%s/dexter-webapp/api/' % URL
-
 text = 'Dexter is an American television drama.'
 entity = 'United_States'
 entity2 = 'Dexter_(TV_series)'
@@ -39,7 +37,7 @@ class TestPyDexter(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls._sut = DexterClient(endpoint)
+        cls._sut = DexterClient(URL)
 
     def test_get_id(self):
         # python -m unittest test_pydexter.TestPyDexter.test_get_id

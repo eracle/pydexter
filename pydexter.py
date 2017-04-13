@@ -23,6 +23,10 @@ __author__ = 'Giacomo Berardi <barnets@gmail.com>'
 # All the Dexter API calls start with
 REST = "/rest/"
 
+ORIGINAL_URL = 'http://dexterdemo.isti.cnr.it:8080/dexter-webapp/api/'
+
+LP_0 = {"lp": 0}
+
 # Django regex for url validation
 url_regex = re.compile(
     r'^(?:http)s?://' # http:// or https://
@@ -34,7 +38,7 @@ url_regex = re.compile(
     r'(?:/?|[/?]\S+)$', re.IGNORECASE)
 
 
-def structure_annotations(annotations):
+def _structure_annotations(annotations):
     """Processes the response of the API call annotate.
     Returns a list with a partitioning of the text,
     in which the annotations are represented by tuples (``mention'', ``entity name'')"""
@@ -58,7 +62,7 @@ def structure_annotations(annotations):
 class DexterClient:
     """A connection to a Dexter REST API server"""
 
-    def __init__(self, url, default_params={"lp": 0}):
+    def __init__(self, url=ORIGINAL_URL, default_params=LP_0):
         self.url = url.rstrip("/") + REST
         if url_regex.match(self.url) is None:
             raise InvalidURL("Malformed url: " + self.url)
@@ -76,7 +80,7 @@ class DexterClient:
     def nice_annotate(self, text, min_conf=0.5):
         """Returns a list with a partitioning of the text,
         in which the annotations are represented by tuples (``mention'', ``entity name'')"""
-        return structure_annotations(self.annotate(text, wikiname=True, min_conf=min_conf))
+        return _structure_annotations(self.annotate(text, wikiname=True, min_conf=min_conf))
 
     def spot(self, text, wikiname=False):
         """Detects all the mentions that could refer to an entity in the text"""
