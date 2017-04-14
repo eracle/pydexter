@@ -2,8 +2,9 @@ __author__ = 'Giacomo Berardi <barnets@gmail.com>'
 
 from setuptools import setup, find_packages
 
+readme_file='README.md'
 def readme():
-    with open('README.rst') as f:
+    with open(readme_file) as f:
         return f.read()
 
 setup(name='pydexter',
