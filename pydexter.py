@@ -12,11 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import requests
 import re
 import sys
-from requests.exceptions import InvalidURL, HTTPError
 from operator import itemgetter
+
+import requests
+from requests.exceptions import InvalidURL, HTTPError
 
 __author__ = 'Giacomo Berardi <barnets@gmail.com>'
 
